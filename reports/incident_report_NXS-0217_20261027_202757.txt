@@ -1,0 +1,54 @@
+================================================================
+NEXUS SYSTEMS // INCIDENT REPORT
+================================================================
+Case ID        : NXS-0217
+Case title     : THE MIDNIGHT BREACH
+Final status   : CLOSED - INVESTIGATION COMPLETE
+Generated      : 2026-10-27 20:27:53
+
+Total score    : 520 / 600
+Challenges     : 5 / 5 completed
+Hints used     : 0
+Wrong attempts : 2
+Performance    : STRONG INVESTIGATION
+
+OBSERVED EVIDENCE
+-----------------
+- A suspicious email from nexus-verify.example (not the organisation's domain) asked for urgent credential verification.
+- Authentication logs show three failed logins for employee01 from 192.0.2.10, then a successful login from 198.51.100.24 at 02:17:04.
+- A restricted resource access attempt was recorded at 02:19:48.
+
+POSSIBLE EXPLANATION (NOT CONFIRMED)
+------------------------------------
+The evidence is consistent with a phishing email leading to exposed credentials, which were then used for an unusual login and an attempt to reach a restricted resource. This is a possible explanation based on simulated evidence. The credential entry step was inferred rather than directly logged, so it is not confirmed.
+
+INCIDENT TIMELINE
+-----------------
+01:48:22          The employee receives the suspicious email.
+                  Source: Mail gateway record - Sender domain differs from nexus.example.
+01:53:41 (est.)   The employee follows the suspicious link and enters credentials (simulated).
+                  Source: Reconstructed from scenario - Not directly logged; inferred because the login pattern follows it.
+02:17:04          An unusual login is recorded.
+                  Source: Authentication log - Successful login from 198.51.100.24 after earlier failures.
+02:19:48          A restricted resource access attempt is recorded.
+                  Source: Access log - Occurs shortly after the unusual login.
+
+IDENTIFIED WARNING SIGNS
+------------------------
+- The message creates urgency.
+- The sender's domain differs from the organisation's normal domain.
+- The email requests immediate account verification.
+- The email contains a suspicious link.
+
+RECOMMENDED RESPONSE ACTIONS
+----------------------------
+- Disable or temporarily restrict the affected account according to the organisation's process.
+- Reset the affected credentials through the approved process.
+- Report and preserve the relevant evidence.
+- Review recent account activity.
+
+CONCLUSION
+----------
+This case shows how small, separate clues (a misleading sender, a decoded note, a login pattern and an access attempt) combine into one story. Good investigators separate what was observed from what is inferred, and respond by containing the issue, protecting accounts and preserving evidence. All events in this report are fictional and simulated.
+
+(All events in this report are fictional.)

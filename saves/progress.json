@@ -1,0 +1,69 @@
+{
+  "completed": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "score": 520,
+  "hints_used": [],
+  "wrong_attempts": {
+    "0": 1,
+    "1": 1
+  },
+  "started": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "bonus_awarded": true,
+  "feed": [
+    [
+      "02:17:04",
+      "ALERT RECEIVED"
+    ],
+    [
+      "02:17:09",
+      "CASE NXS-0217 OPENED"
+    ],
+    [
+      "02:18:12",
+      "EMAIL EVIDENCE ANALYSED"
+    ],
+    [
+      "02:18:40",
+      "ENCODED NOTE RECOVERED"
+    ],
+    [
+      "02:20:33",
+      "LOGIN RECORDS AVAILABLE"
+    ],
+    [
+      "02:21:15",
+      "LOGIN ANOMALY FLAGGED"
+    ],
+    [
+      "02:21:50",
+      "ACCESS LOG FRAGMENTS COLLECTED"
+    ],
+    [
+      "02:23:02",
+      "TIMELINE RECONSTRUCTED"
+    ],
+    [
+      "02:23:30",
+      "RESPONSE OPTIONS PENDING"
+    ],
+    [
+      "02:26:11",
+      "RESPONSE PLAN APPROVED"
+    ],
+    [
+      "02:26:40",
+      "CASE NXS-0217 READY FOR REPORT"
+    ]
+  ]
+}

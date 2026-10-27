@@ -1,0 +1,171 @@
+{
+  "case": {
+    "id": "NXS-0217",
+    "name": "THE MIDNIGHT BREACH",
+    "company": "NEXUS SYSTEMS",
+    "threat_level": "HIGH",
+    "alert_time": "02:17 AM",
+    "scenario": "NEXUS SYSTEMS has reported unusual activity involving an employee account. The security team has found signs of a suspicious email, unusual login attempts, and possible access to a restricted resource.\n\nYou have been assigned to examine the available evidence and determine the likely sequence of events.",
+    "objectives": [
+      "Examine the suspicious email.",
+      "Decode the recovered message.",
+      "Analyse the login records.",
+      "Reconstruct the incident timeline.",
+      "Select the appropriate response.",
+      "Submit the final investigation report."
+    ],
+    "start_events": [
+      ["02:17:04", "ALERT RECEIVED"],
+      ["02:17:09", "CASE NXS-0217 OPENED"]
+    ]
+  },
+
+  "challenges": [
+    {
+      "id": 1,
+      "title": "The Suspicious Email",
+      "scenario": "The investigation begins with an email received by an employee of NEXUS SYSTEMS. It claims the account will be suspended unless credentials are verified immediately. Examine the email carefully.",
+      "task": "Which of the following are warning signs in this email? Select all that apply.",
+      "email": {
+        "from": "security@nexus-verify.example",
+        "to": "employee@nexus.example",
+        "subject": "URGENT: Your account will be suspended",
+        "body": "Hello,\n\nYour account requires immediate verification. Failure to verify within 10 minutes may result in account suspension. Please review the attached account notice and follow the verification instructions.",
+        "link": "https://nexus-verify.example/account-check",
+        "normal_domain": "nexus.example"
+      },
+      "options": [
+        {"text": "The message creates urgency.", "correct": true},
+        {"text": "The sender's domain differs from the organisation's normal domain.", "correct": true},
+        {"text": "The email requests immediate account verification.", "correct": true},
+        {"text": "The email contains a suspicious link.", "correct": true},
+        {"text": "The email uses a normal greeting.", "correct": false}
+      ],
+      "hint": "Look at the sender, the link, and the pressure created by the message.",
+      "wrong_note": "Compare the sender's domain with the organisation's normal domain, then look at the link and the pressure the message applies.",
+      "explanation": "Phishing messages often use urgency, misleading domains, suspicious links, or requests for sensitive information. A normal greeting is not suspicious by itself. No single clue proves an email is malicious, but several together justify caution and a report to the security team.",
+      "feed_complete": [["02:18:12", "EMAIL EVIDENCE ANALYSED"], ["02:18:40", "ENCODED NOTE RECOVERED"]]
+    },
+    {
+      "id": 2,
+      "title": "The Encoded Message",
+      "scenario": "While reviewing the incident notes, the security team recovered a short encoded message. It looks like a simple substitution of letters. Decode it to obtain the next clue.",
+      "task": "Decode the message and type the plaintext below.",
+      "cipher_type": "Caesar Cipher",
+      "shift": 3,
+      "ciphertext": "ORJLQV IURP D QHZ ORFDWLRQ",
+      "plaintext": "LOGINS FROM A NEW LOCATION",
+      "max_attempts_before_reveal": 3,
+      "hint": "Each letter has been shifted three places forward in the encrypted message. Try moving each letter three places backward.",
+      "wrong_note": "That does not match the recovered message. Move every letter back by the shift value (remember to wrap around: A moves back to X, Y or Z).",
+      "explanation": "A Caesar Cipher replaces each letter with another letter a fixed number of positions away in the alphabet. It is a basic educational example and is not secure for protecting real information, because there are only 25 possible shifts to try.",
+      "feed_complete": [["02:20:33", "LOGIN RECORDS AVAILABLE"]]
+    },
+    {
+      "id": 3,
+      "title": "The Login Anomaly",
+      "scenario": "The security team has collected simulated login records for the employee account. Identify the suspicious pattern, then select the record that deserves attention.",
+      "task": "Which pattern deserves further investigation?",
+      "table_columns": ["Time", "User", "Source IP", "Result"],
+      "table_rows": [
+        ["01:55:10", "employee01", "192.0.2.10", "SUCCESS"],
+        ["02:02:14", "employee01", "192.0.2.10", "FAILED"],
+        ["02:02:31", "employee01", "192.0.2.10", "FAILED"],
+        ["02:02:46", "employee01", "192.0.2.10", "FAILED"],
+        ["02:17:04", "employee01", "198.51.100.24", "SUCCESS"]
+      ],
+      "suspicious_row": 4,
+      "options": [
+        {"text": "Repeated failed login attempts followed by a successful login from a different IP address.", "correct": true},
+        {"text": "A single successful login from the usual IP address.", "correct": false},
+        {"text": "The presence of timestamps.", "correct": false},
+        {"text": "The use of a username.", "correct": false}
+      ],
+      "row_task": "Now click the record in the table that is most unusual.",
+      "hint": "Look for repeated failures, then compare the IP address of the later successful login.",
+      "wrong_note": "Compare the source addresses and the sequence of failed and successful attempts.",
+      "explanation": "Repeated failed attempts followed by a successful login from a different address may be suspicious and deserve further investigation. It does not automatically prove the account was compromised: the user may simply have changed network. It tells the investigator where to look next.",
+      "feed_complete": [["02:21:15", "LOGIN ANOMALY FLAGGED"], ["02:21:50", "ACCESS LOG FRAGMENTS COLLECTED"]]
+    },
+    {
+      "id": 4,
+      "title": "Reconstruct the Incident",
+      "scenario": "You now hold several pieces of evidence. Arrange the four events in the order that most reasonably explains the incident.",
+      "task": "Use the UP / DOWN buttons to place the events in chronological order, earliest first.",
+      "events": [
+        {"id": "E1", "time": "01:48:22", "time_note": "", "event": "The employee receives the suspicious email.", "source": "Mail gateway record", "note": "Sender domain differs from nexus.example."},
+        {"id": "E2", "time": "01:53:41", "time_note": "estimated", "event": "The employee follows the suspicious link and enters credentials (simulated).", "source": "Reconstructed from scenario", "note": "Not directly logged; inferred because the login pattern follows it."},
+        {"id": "E3", "time": "02:17:04", "time_note": "", "event": "An unusual login is recorded.", "source": "Authentication log", "note": "Successful login from 198.51.100.24 after earlier failures."},
+        {"id": "E4", "time": "02:19:48", "time_note": "", "event": "A restricted resource access attempt is recorded.", "source": "Access log", "note": "Occurs shortly after the unusual login."}
+      ],
+      "start_order": ["E3", "E1", "E4", "E2"],
+      "correct_order": ["E1", "E2", "E3", "E4"],
+      "hint": "Compare the timestamps first. Then ask which event would have to happen before the others for the rest to make sense.",
+      "wrong_note": "Compare the event timestamps and think about how the clues relate: credentials must be exposed before they can be used to log in.",
+      "explanation": "Investigators build timelines to understand the order of events and how different pieces of evidence may be related. This timeline is a possible reconstruction based on the fictional evidence, not proof that every event occurred exactly as shown in a real incident.",
+      "feed_complete": [["02:23:02", "TIMELINE RECONSTRUCTED"], ["02:23:30", "RESPONSE OPTIONS PENDING"]]
+    },
+    {
+      "id": 5,
+      "title": "The Response Protocol",
+      "scenario": "You have identified several suspicious activities. Now recommend what the NEXUS SYSTEMS security team should do next.",
+      "task": "Select all appropriate response actions.",
+      "options": [
+        {"text": "Disable or temporarily restrict the affected account according to the organisation's process.", "correct": true},
+        {"text": "Reset the affected credentials through the approved process.", "correct": true},
+        {"text": "Report and preserve the relevant evidence.", "correct": true},
+        {"text": "Review recent account activity.", "correct": true},
+        {"text": "Ignore the alert.", "correct": false},
+        {"text": "Share the credentials with another employee.", "correct": false},
+        {"text": "Delete all records before the investigation.", "correct": false}
+      ],
+      "hint": "Think about containing the problem, protecting the account, and keeping the evidence safe.",
+      "wrong_note": "Good response contains the issue, protects the account, preserves evidence and reviews activity. Anything that hides, ignores or spreads the problem is inappropriate.",
+      "explanation": "The basic goals of incident response are to contain the suspected issue, protect the affected account, preserve useful evidence, review the available information, and follow the organisation's reporting and recovery process. Not every incident follows exactly the same procedure.",
+      "feed_complete": [["02:26:11", "RESPONSE PLAN APPROVED"], ["02:26:40", "CASE NXS-0217 READY FOR REPORT"]]
+    }
+  ],
+
+  "evidence": [
+    {
+      "id": "E-01", "name": "Suspicious Email", "challenge": 1,
+      "description": "Email received by an employee shortly before the alert.",
+      "available_details": "FROM: security@nexus-verify.example\nTO: employee@nexus.example\nSUBJECT: URGENT: Your account will be suspended\nLINK: https://nexus-verify.example/account-check\n\nThe message demands verification within 10 minutes.",
+      "findings": "Urgency, a sender domain that differs from nexus.example, a request for immediate verification and a suspicious link were identified as warning signs."
+    },
+    {
+      "id": "E-02", "name": "Encoded Message", "challenge": 2,
+      "description": "Short encoded note recovered from the incident notes.",
+      "available_details": "CIPHERTEXT: ORJLQV IURP D QHZ ORFDWLRQ\nTYPE: Caesar Cipher, shift 3",
+      "findings": "Decoded message: LOGINS FROM A NEW LOCATION. This points the investigation toward the authentication records."
+    },
+    {
+      "id": "E-03", "name": "Simulated Login Records", "challenge": 3,
+      "description": "Authentication log entries for account employee01.",
+      "available_details": "Five authentication entries between 01:55:10 and 02:17:04 for employee01 (see the Login Anomaly stage).",
+      "findings": "Three failed logins from 192.0.2.10 were followed at 02:17:04 by a successful login from a different address, 198.51.100.24. This pattern deserves further investigation."
+    },
+    {
+      "id": "E-04", "name": "Incident Timeline", "challenge": 4,
+      "description": "Event records waiting to be placed in order.",
+      "available_details": "Four event records have been collected: a received email, a credential entry, an unusual login and a restricted access attempt. Their order has not yet been established.",
+      "findings": ""
+    },
+    {
+      "id": "E-05", "name": "Incident Response Findings", "challenge": 5,
+      "description": "Open questions about how the team should respond.",
+      "available_details": "Response options are under review. Choose actions that contain the issue, protect the account, preserve evidence and review activity.",
+      "findings": ""
+    }
+  ],
+
+  "report": {
+    "observed": [
+      "A suspicious email from nexus-verify.example (not the organisation's domain) asked for urgent credential verification.",
+      "Authentication logs show three failed logins for employee01 from 192.0.2.10, then a successful login from 198.51.100.24 at 02:17:04.",
+      "A restricted resource access attempt was recorded at 02:19:48."
+    ],
+    "possible_explanation": "The evidence is consistent with a phishing email leading to exposed credentials, which were then used for an unusual login and an attempt to reach a restricted resource. This is a possible explanation based on simulated evidence. The credential entry step was inferred rather than directly logged, so it is not confirmed.",
+    "conclusion": "This case shows how small, separate clues (a misleading sender, a decoded note, a login pattern and an access attempt) combine into one story. Good investigators separate what was observed from what is inferred, and respond by containing the issue, protecting accounts and preserving evidence. All events in this report are fictional and simulated."
+  }
+}
